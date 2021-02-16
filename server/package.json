@@ -1,0 +1,11 @@
+{
+  "name": "travis-with-kind-server",
+  "version": "1.0.0",
+  "description": "A simple server to give Travis CI some behavior",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bob Reselman <reselbob@gmail.com>",
+  "license": "MIT"
+}
