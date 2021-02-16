@@ -19,4 +19,6 @@ before_install:
 - kind create cluster --config ./kind-config.yaml
 - kubectl get nodes
 script:
+- cd server
 - npm install
+- node ./index.js
