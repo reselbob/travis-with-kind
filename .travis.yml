@@ -6,8 +6,6 @@ branches:
   only:
   - master
 before_install:
-- pwd
-script:
 - echo "installing kubectl"
 - curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 - chmod +x ./kubectl
@@ -20,3 +18,5 @@ script:
 - kind --version
 - kind create cluster --config ./kind-config.yaml
 - kubectl get nodes
+script:
+- npm install
