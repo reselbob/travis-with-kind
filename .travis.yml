@@ -4,7 +4,7 @@ node_js:
 os: ubuntu
 branches:
   only:
-  - main
+  - run_simple_service
 before_install:
 - echo "installing kubectl"
 - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -19,6 +19,6 @@ before_install:
 - kind create cluster --config ./kind-config.yaml
 - kubectl get nodes
 script:
-- cd server
-- npm install
-- node ./index.js
+- kubectl create deployment nginx --image=nginx
+- kubectl create service nodeport nginx --tcp=80:80
+- kubectl get svc
