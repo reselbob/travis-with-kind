@@ -28,4 +28,5 @@ script:
 - kubectl get deployments
 - HOST=$(kubectl get nodes kind-worker -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}')
 - PORT=$(kubectl get service nginx -o jsonpath='{.spec.ports[?(@.port==80)].nodePort}')
+- echo $HOST:$PORT
 - curl $HOST:$PORT
