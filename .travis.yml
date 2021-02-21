@@ -21,13 +21,13 @@ before_install:
 - sleep 2m
 - kubectl get nodes
 script:
-- kubectl create deployment nginx --image=nginx
-- kubectl create service nodeport nginx --tcp=80:80
-- sleep 5m
+- kubectl create deployment pinger --replicas=3 --image=reselbob/pinger
+- kubectl create service nodeport pinger --tcp=3000:3000
+- sleep 2m
 - kubectl get svc -o wide
 - kubectl get pods -o wide
 - kubectl get deployments -o wide
 - HOST=$(kubectl get nodes kind-worker -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}')
-- PORT=$(kubectl get service nginx -o jsonpath='{.spec.ports[?(@.port==80)].nodePort}')
+- PORT=$(kubectl get service pinger -o jsonpath='{.spec.ports[?(@.port==80)].nodePort}')
 - echo $HOST:$PORT
 - curl $HOST:$PORT
