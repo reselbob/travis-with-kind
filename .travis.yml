@@ -17,12 +17,15 @@ before_install:
 - sudo mv ./kind /usr/local/bin/kind
 - kind --version
 - kind create cluster --config ./kind-config.yaml
-- sleep 2m
+- sleep 30s
 - kubectl get nodes
 script:
 - kubectl create deployment nginx --image=nginx
 - kubectl create service nodeport nginx --tcp=80:80
-- sleep 2m
+- REPS=$(kubectl get deployment nginx -o jsonpath='{.status.availableReplicas}') && while [ $REPS != 3 ]; do REPS=$(kubectl get deployment nginx -o jsonpath='{.status.availableReplicas}'); echo $REPS; sleep 2s; done
 - kubectl get svc
 - kubectl get pods
 - kubectl get deployments
+- HOST=$(kubectl get nodes kind-worker -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}')
+- PORT=$(kubectl get service nginx -o jsonpath='{.spec.ports[?(@.port==80)].nodePort}')
+- curl $HOST:$PORT
