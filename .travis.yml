@@ -17,10 +17,12 @@ before_install:
 - sudo mv ./kind /usr/local/bin/kind
 - kind --version
 - kind create cluster --config ./kind-config.yaml
+- sleep 3s
 - kubectl get nodes
 script:
 - kubectl create deployment nginx --image=nginx
 - kubectl create service nodeport nginx --tcp=80:80
+- sleep 3s
 - kubectl get svc
 - kubectl get pods
 - kubectl get deployments
