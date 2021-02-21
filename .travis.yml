@@ -22,10 +22,10 @@ before_install:
 script:
 - kubectl create deployment nginx --image=nginx
 - kubectl create service nodeport nginx --tcp=80:80
-- sleep 2m
-- kubectl get svc
-- kubectl get pods
-- kubectl get deployments
+- sleep 5m
+- kubectl get svc -o wide
+- kubectl get pods -o wide
+- kubectl get deployments -o wide
 - HOST=$(kubectl get nodes kind-worker -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}')
 - PORT=$(kubectl get service nginx -o jsonpath='{.spec.ports[?(@.port==80)].nodePort}')
 - echo $HOST:$PORT
